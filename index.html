@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshare Downloader</title>
+    <link rel="stylesheet" href="./stylesheets/all.css">
+    <link rel="stylesheet" href="./stylesheets/tailwindcss.css">
+</head>
+
+<body>
+    <div class="sm:container md:container lg:container xl:container mx-auto p-[20px] flex min-h-screen">
+        <div class="m-auto">
+            <h1 class="text-5xl font-bold text-center text-gray-800">Download Slideshare <br>Presentation by Link!</h1>
+            <div class="mt-[1rem] text-base">
+                <ul class="flex gap-[1.5rem] justify-center">
+                    <li>Free</li>
+                    <li>Unlimited</li>
+                    <li>No Watermark</li>
+                </ul>
+            </div>
+    
+            <div class="flex justify-center mt-7 mb-10 w-full">
+                <div class="inline-flex border-2 rounded-full border-gray-800 p-1 relative w-full">
+                    <label for="input-url" class="absolute top-1/2 -translate-y-1/2 ml-2 text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                        </svg>
+                    </label>
+                    <input type="text" placeholder="Paste link here!" name="url" id="input-url" class="ml-10 bg-transparent w-full focus:outline-none" autocomplete="off">
+                    <button class="bg-gray-800 inline-flex text-white py-3 px-14 rounded-full font-medium text-ellipsis ml-1">
+                        Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
