@@ -1,11 +1,26 @@
-class AlertError extends HTMLElement {
-    constructor(message = 'Error Message!') {
-        super();
+class AlertPopUp extends HTMLElement {
+  constructor() {
+    super();
+  }
 
-        this.className =
-            'alertError bg-red-500 px-4 py-4 text-white rounded-xl flex gap-2 justify-between w-72 mt-2 mr-2 items-center';
+  connectedCallback() {
+    const closeBtn = this.querySelector("#btn__alert-close");
 
-        this.innerHTML = `
+    closeBtn.addEventListener("click", () => {
+      this.remove();
+      let stack = document.querySelector(".alert-stack");
+      if (stack.hasChildNodes.length < 1) stack.remove();
+    });
+  }
+}
+class AlertError extends AlertPopUp {
+  constructor(message = "Error Message!") {
+    super();
+
+    this.className =
+      "alert bg-red-500 px-4 py-4 text-white rounded-xl flex gap-2 justify-between w-72 mt-2 mr-2 items-center";
+
+    this.innerHTML = `
         <div class="flex gap-2 flex-shrink overflow-hidden items-center">
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -24,39 +39,90 @@ class AlertError extends HTMLElement {
             </svg>
         </button>
     `;
-    }
-
-    connectedCallback() {
-        const closeBtn = this.querySelector('#btn__alert-close');
-
-        closeBtn.addEventListener('click', () => {
-            this.remove();
-        });
-    }
+  }
 }
+class AlertSuccess extends AlertPopUp {
+  constructor(message = "Success Message!") {
+    super();
 
-customElements.define('alert-error', AlertError);
+    this.className =
+      "alert bg-green-500 px-4 py-4 text-white rounded-xl flex gap-2 justify-between w-72 mt-2 mr-2 items-center";
 
-// 
+    this.innerHTML = `
+        <div class="flex gap-2 flex-shrink overflow-hidden items-center">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="overflow-hidden text-ellipsis whitespace-nowrap" id="alert-message">
+                ${message}
+            </div>
+        </div>
+        <button type="button" id="btn__alert-close">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
+    `;
+  }
+}
+class AlertContainer extends HTMLElement {
+  constructor() {
+    super();
+    this.className = "alert-stack absolute top-0 right-0 flex flex-col z-50";
+  }
 
-const button = document.getElementById('button');
+  connectedCallback() {
+    this.addEventListener("change", () => {
+      console.log(this.hasChildNodes.length);
+    });
+  }
+}
+customElements.define("alert-error", AlertError);
+customElements.define("alert-success", AlertSuccess);
+customElements.define("alert-container", AlertContainer);
+
+//
+
+const button = document.getElementById("button");
 
 function btnLoading() {
-    return 'Loading...';
+  return "Loading...";
 }
 
 function btnDownload() {
-    return 'Download';
+  return "Download";
 }
 
 function btnCloseAlert() {
-    const btn = document.getElementById('btn__alert-close');
+  const btn = document.getElementById("btn__alert-close");
 }
 
-button.addEventListener('click', () => {
-    const alert = new AlertError("Hahaha Error WKKWKWKWKWKW");
+button.addEventListener("click", async () => {
+  const alertColls = document.querySelectorAll(".alert");
+  if (!document.querySelector(".alert-stack")) {
+    document.body.firstElementChild.before(new AlertContainer());
+  }
+  try {
+    const response = await fetch("https://slideshare.net");
 
-    document.querySelector('.alert-stack').append(alert);
+    const alert = new AlertSuccess("Downloading...");
+
+    document.querySelector(".alert-stack").append(alert);
+  } catch (error) {
+    console.log();
+    const alert = new AlertError(error.message);
+
+    document.querySelector(".alert-stack").append(alert);
+  }
+  if (alertColls.length >= 1) {
+    alertColls[0].remove();
+  }
 });
 
 // document.addEventListener('DOMContentLoaded', () => {

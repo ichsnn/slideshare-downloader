@@ -3,3 +3,18 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+
+.alert {
+    animation: alertPopUp normal 750ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@keyframes alertPopUp {
+    0% {
+        margin-top: 25px;
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100;
+    }
+}
