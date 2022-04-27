@@ -18,7 +18,7 @@ class AlertError extends AlertPopUp {
     super();
 
     this.className =
-      "alert bg-red-500 px-4 py-4 text-white rounded-xl flex gap-2 justify-between w-72 mt-2 mr-2 items-center";
+      "alert bg-red-500 px-4 py-4 text-white rounded-xl flex gap-2 justify-between mt-2 mr-2 items-center min-w-[18rem]";
 
     this.innerHTML = `
         <div class="flex gap-2 flex-shrink overflow-hidden items-center">
@@ -27,7 +27,7 @@ class AlertError extends AlertPopUp {
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                   </svg>
             </div>
-            <div class="overflow-hidden text-ellipsis whitespace-nowrap" id="alert-message">
+            <div class="overflow-hidden text-ellipsis whitespace-nowrap" id="alert-message" aria-label="${message}">
                 ${message}
             </div>
         </div>
@@ -83,6 +83,7 @@ class AlertContainer extends HTMLElement {
     });
   }
 }
+
 customElements.define("alert-error", AlertError);
 customElements.define("alert-success", AlertSuccess);
 customElements.define("alert-container", AlertContainer);
@@ -105,11 +106,34 @@ function btnCloseAlert() {
 
 button.addEventListener("click", async () => {
   const alertColls = document.querySelectorAll(".alert");
+
   if (!document.querySelector(".alert-stack")) {
     document.body.firstElementChild.before(new AlertContainer());
   }
+
+  button.disabled = true;
+  button.innerHTML = btnLoading();
+
   try {
-    const response = await fetch("https://slideshare.net");
+    const url = document.getElementById('input-url').value
+    const response = await fetch(
+      "https://slideshare-image-api.herokuapp.com/api/slides/download?url=" + url
+    );
+
+    if(!response.ok) {
+      const json = await response.json();
+      throw new Error(json.message);
+    }
+
+    const link = document.createElement('a')
+    link.target = "_blank";
+    link.download = "PDF.pdf";
+    const result = await response.blob();
+    link.href = URL.createObjectURL(result)
+    link.click();
+    
+
+    if (!response.status) throw new Error(response.message);
 
     const alert = new AlertSuccess("Downloading...");
 
@@ -120,6 +144,9 @@ button.addEventListener("click", async () => {
 
     document.querySelector(".alert-stack").append(alert);
   }
+  button.innerHTML = btnDownload();
+  button.disabled = false;
+
   if (alertColls.length >= 1) {
     alertColls[0].remove();
   }
