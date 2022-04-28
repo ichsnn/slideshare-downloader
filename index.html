@@ -2,55 +2,51 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slideshare Downloader</title>
-    <link rel="stylesheet" href="./stylesheets/all.css">
-    <link rel="stylesheet" href="./stylesheets/tailwindcss.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slideshare Downloader</title>
+  <link rel="stylesheet" href="./stylesheets/all.css">
+  <link rel="stylesheet" href="./stylesheets/tailwindcss.css">
 </head>
 
 <body>
-    <div class="sm:container md:container lg:container xl:container mx-auto p-[20px] flex min-h-screen">
-        <div class="m-auto">
+  <div class="sm:container md:container lg:container xl:container mx-auto p-[20px] flex mt-10">
+    <div class="mx-auto">
+      <h1 class="text-4xl font-bold text-center text-gray-800 tracking-widest">Download Slideshare <br>Presentation by Link!</h1>
 
-            <h1 class="text-5xl font-bold text-center text-gray-800">Download Slideshare <br>Presentation by Link!</h1>
+      <div class="mt-[1rem] text-base tracking-wider text-gray-800">
+        <ul class="flex gap-[1.5rem] justify-center">
+          <li>Free</li>
+          <li>Unlimited</li>
+          <li>No Watermark</li>
+        </ul>
+      </div>
 
-            <div class="mt-[1rem] text-base text-gray-800">
-                <ul class="flex gap-[1.5rem] justify-center">
-                    <li>Free</li>
-                    <li>Unlimited</li>
-                    <li>No Watermark</li>
-                </ul>
-            </div>
-
-            <div class="flex justify-center mt-7 mb-1 w-full">
-                <div class="inline-flex border-[3px] rounded-full border-gray-800 p-1 relative w-full"
-                    id="download-form">
-                    <label for="input-url" class="absolute top-1/2 -translate-y-1/2 ml-2 text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>
-                    </label>
-                    <input type="text" placeholder="Paste link here!" name="url" id="input-url"
-                        class="ml-10 bg-transparent w-full h-12 focus:outline-none" autocomplete="off">
-                    <button type="submit" id="button"
-                        class="bg-gray-800 inline-flex text-white py-3 px-3 w-3/4 rounded-full font-medium text-ellipsis ml-2 hover:cursor-pointer hover:bg-gray-900 active:bg-gray-800 justify-center disabled:cursor-wait disabled:bg-gray-800">
-                        <div>
-                            Download
-                        </div>
-                        <!-- <div>
-                            Loading...
-                        </div> -->
-                    </button>
-                </div>
-            </div>
+      <div class="flex justify-center mt-7 mb-1">
+        <div class="inline-flex border-[3px] rounded-full border-gray-800 p-1 relative w-full" id="download-form">
+          <label for="input-url" class="absolute top-1/2 -translate-y-1/2 ml-2 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+          </label>
+          <input type="text" placeholder="Paste link here!" name="url" id="input-url"
+            class="ml-8 bg-transparent w-full h-10 focus:outline-none text-base tracking-wider autofill:bg-transparent">
+          <button type="submit" id="button"
+            class="bg-gray-800 flex text-white py-1 px-3 w-3/4 rounded-full font-medium ml-2 hover:cursor-pointer hover:bg-gray-900 active:bg-gray-800 justify-center disabled:cursor-wait disabled:bg-gray-800 text-base tracking-wider items-center">
+            Download
+          </button>
         </div>
-    </div>
+      </div>
 
-    <script src="./app.js"></script>
+      <div id="alert" class="mt-2 ml-2">
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
 </body>
 
 </html>
