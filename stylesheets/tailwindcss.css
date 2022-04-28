@@ -637,12 +637,28 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 24rem;
 }
 
+.w-\[420px\] {
+  width: 420px;
+}
+
+.w-\[425px\] {
+  width: 425px;
+}
+
+.w-4\/6 {
+  width: 66.666667%;
+}
+
 .min-w-\[18rem\] {
   min-width: 18rem;
 }
 
 .min-w-\[14rem\] {
   min-width: 14rem;
+}
+
+.min-w-\[134px\] {
+  min-width: 134px;
 }
 
 .max-w-\[18rem\] {
@@ -659,6 +675,26 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .max-w-5xl {
   max-width: 64rem;
+}
+
+.max-w-\[\] {
+  max-width: ;
+}
+
+.max-w-\[42\] {
+  max-width: 42;
+}
+
+.max-w-\[430px\] {
+  max-width: 430px;
+}
+
+.max-w-\[440px\] {
+  max-width: 440px;
+}
+
+.max-w-xs {
+  max-width: 20rem;
 }
 
 .flex-shrink {
@@ -814,6 +850,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+}
+
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .text-left {
