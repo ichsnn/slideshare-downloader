@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.__container {
+    @apply sm:container md:container lg:container xl:container mx-auto p-[20px] flex mt-5;
+}
+
+.__container-box {
+    @apply mx-auto max-w-[440px] w-full;
+}
+
+.__title {
+    @apply text-4xl font-bold text-center text-gray-800 tracking-widest;
+}
+
+.__tag-container {
+    @apply mt-[1rem] text-base tracking-wider text-gray-800;
+}
+
+.__tag-ul-list {
+    @apply flex gap-[1.5rem] justify-center;
+}
+
+.__form__container {
+    @apply flex justify-center mt-7 mb-1 items-center;
+}
+
+.__form-box {
+    @apply flex border-[3px] rounded-full border-gray-800 p-1 relative w-full items-center;
+}
+
+.__form__input-icon-label {
+    @apply absolute top-1/2 -translate-y-1/2 ml-2 text-gray-400;
+}
+
+.__from__input-text {
+    @apply ml-8 mr-2 bg-transparent w-full h-10 focus:outline-none text-base tracking-wider autofill:bg-transparent;
+}
+
+.__btn-submit {
+    @apply bg-gray-800 flex text-white p-3 min-w-[134px] rounded-full font-medium hover:cursor-pointer hover:bg-gray-900 active:bg-gray-800 justify-center disabled:cursor-wait disabled:bg-gray-800 text-base tracking-wider items-center;
+}
+
+.__alert-container {
+    @apply mt-2 ml-2;
+}
