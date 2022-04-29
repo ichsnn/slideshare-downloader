@@ -11,21 +11,21 @@
 </head>
 
 <body>
-  <div class="sm:container md:container lg:container xl:container mx-auto p-[20px] flex mt-10">
-    <div class="mx-auto max-w-[440px] w-full">
-      <h1 class="text-4xl font-bold text-center text-gray-800 tracking-widest">Download Slideshare <br>Presentation by Link!</h1>
+  <div class="__container">
+    <div class="__container-box">
+      <h1 class="__title">Download Slideshare <br>Presentation by Link!</h1>
 
-      <div class="mt-[1rem] text-base tracking-wider text-gray-800">
-        <ul class="flex gap-[1.5rem] justify-center">
+      <div class="__tag-container">
+        <ul class="__tag-ul-list">
           <li>Free</li>
           <li>Unlimited</li>
           <li>No Watermark</li>
         </ul>
       </div>
 
-      <div class="flex justify-center mt-7 mb-1 items-center">
-        <div class="flex border-[3px] rounded-full border-gray-800 p-1 relative w-full items-center" id="download-form">
-          <label for="input-url" class="absolute top-1/2 -translate-y-1/2 ml-2 text-gray-400">
+      <div class="__form__container">
+        <div class="__form-box" id="download-form">
+          <label for="input-url" class="__form__input-icon-label">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -33,15 +33,15 @@
             </svg>
           </label>
           <input type="text" placeholder="Paste link here!" name="url" id="input-url"
-            class="ml-8 bg-transparent w-full h-10 focus:outline-none text-base tracking-wider autofill:bg-transparent">
+            class="__from__input-text">
           <button type="submit" id="button"
-            class="bg-gray-800 flex text-white py-3 min-w-[134px] rounded-full font-medium ml-2 hover:cursor-pointer hover:bg-gray-900 active:bg-gray-800 justify-center disabled:cursor-wait disabled:bg-gray-800 text-base tracking-wider items-center">
+            class="__btn-submit">
             Download
           </button>
         </div>
       </div>
 
-      <div id="alert" class="mt-2 ml-2">
+      <div id="alert" class="__alert-container">
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "npx tailwindcss -i ./src/input.css -o ./stylesheets/tailwindcss.css --watch"
+    "dev": "npx tailwindcss -i ./src/input.css -o ./stylesheets/tailwindcss.css --minify --watch"
   },
   "author": "",
   "license": "ISC"
