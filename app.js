@@ -31,8 +31,7 @@ button.addEventListener("click", async () => {
     const url = inputURL.value;
     // Fetch from API
     const response = await fetch(
-      "https://slideshare-image-api.herokuapp.com/api/slides/download?url=" +
-        url
+      "http://localhost:3000/api/slides/download?url=" + url
     );
 
     // Throw error if response false
@@ -51,17 +50,32 @@ button.addEventListener("click", async () => {
       }
     }
 
-    // Create HTML Element to download file from api with "a" tag and "download" attribute
-    // Common use "<a target='_blank' download='DOWNLOAD_LINK'>Download</a>"
+    const newResponse = new Response(
+      new ReadableStream({
+        start: async (controller) => {
+          const reader = response.body.getReader();
+          const contentLength = +response.headers.get("Content-Length");
+          let receivedLength = 0;
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+              controller.close();
+              break;
+            }
+            controller.enqueue(value);
+            receivedLength += value.length;
+            console.log(`Received ${receivedLength} of ${contentLength}`);
+          }
+        },
+      })
+    );
+
+    const blob = await newResponse.blob();
+
     const downloadObject = document.createElement("a");
     downloadObject.target = "_blank";
     downloadObject.download = filename;
-
-    // Make URL from blob on response
-    const blob = await response.blob();
     downloadObject.href = URL.createObjectURL(blob);
-
-    // Download file with click() method
     downloadObject.click();
 
     // Remove recent PopUp
