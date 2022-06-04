@@ -41,11 +41,21 @@ button.addEventListener("click", async () => {
       throw new Error(json.message);
     }
 
+    const contentDisposition = response.headers.get("Content-Disposition");
+    let filename = "";
+    if (contentDisposition && contentDisposition.indexOf("attachment") !== -1) {
+      let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+      let matches = filenameRegex.exec(contentDisposition);
+      if (matches != null && matches[1]) {
+        filename = matches[1].replace(/['"]/g, "");
+      }
+    }
+
     // Create HTML Element to download file from api with "a" tag and "download" attribute
     // Common use "<a target='_blank' download='DOWNLOAD_LINK'>Download</a>"
     const downloadObject = document.createElement("a");
     downloadObject.target = "_blank";
-    downloadObject.download = "PDF.pdf";
+    downloadObject.download = filename;
 
     // Make URL from blob on response
     const blob = await response.blob();
@@ -78,5 +88,6 @@ button.addEventListener("click", async () => {
     ),
       inputURL.focus();
   }
-  button.innerHTML = btnDownload(); button.disabled = false;
+  button.innerHTML = btnDownload();
+  button.disabled = false;
 });
