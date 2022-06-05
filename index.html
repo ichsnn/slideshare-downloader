@@ -3,46 +3,48 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Download slideshare file for free">
   <title>Slideshare Downloader</title>
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="./stylesheets/all.css">
   <link rel="stylesheet" href="./stylesheets/tailwindcss.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-  <div class="__container">
-    <div class="__container-box">
-      <h1 class="__title">Download Slideshare <br>Presentation by Link!</h1>
-
-      <div class="__tag-container">
-        <ul class="__tag-ul-list">
-          <li>Free</li>
-          <li>Unlimited</li>
-          <li>No Watermark</li>
-        </ul>
+  <div class="wrapper container mx-auto p-4">
+    <header>
+      <div class="text-center">
+        <h1 class="text-3xl font-extrabold text-gray-800 leading-tight tracking-wide">Slideshare Downloader</h1>
+        <p class="text-sm text-gray-600">Download Slideshare PDF for Free and Unlimited</p>
       </div>
-
-      <div class="__form__container flex">
-        <div class="__form-box" id="download-form">
-          <label for="input-url" class="__form__input-icon-label">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-            </svg>
-          </label>
-          <input type="text" placeholder="Paste link here!" name="url" id="input-url" class="__from__input-text">
-          <button type="submit" id="button" class="__btn-submit">
-            Download
-          </button>
+    </header>
+    <main>
+      <div class="max-w-sm sm:max-w-lg mx-auto">
+        <div class="rounded-md px-4 py-6 sm:p-6 shadow-xl shadow-gray-400">
+          <form>
+            <div class="p-3 bg-opacity-10 bg-gray-800 rounded-md flex gap-2 items-center">
+              <label class="text-gray-400" for="url"><i class="fa-solid fa-link"></i></label>
+              <input type="text" placeholder="Paste link here!" class="focus:outline-none bg-transparent w-full"
+                id="url">
+              <button type="submit"
+                class="py-2 px-4 bg-gradient-to-tr from-gray-500 via-700-900 to-gray-800 rounded-md text-white">Download</button>
+            </div>
+          </form>
         </div>
       </div>
-
-      <div id="alert" class="__alert-container">
+    </main>
+    <footer>
+      <div class="text-center pt-4">
+        <p class="text-gray-500">
+          Created by <span class="font-bold text-gray-800"><i class="fa-brands fa-github"></i> <a
+              href="https://github.com/ichsnn" class="underline">ichsnn</a></span>
+        </p>
       </div>
-    </div>
+    </footer>
   </div>
 
   <script src="./app.js"></script>

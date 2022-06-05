@@ -3,29 +3,3 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
-
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset;
-  box-shadow: 0 0 0px 1000px white inset;
-}
-
-.alert {
-    animation: showing 500ms ease-out, fadein 750ms ease-out;
-    position: relative;
-}
-
-@keyframes showing {
-    from {
-        bottom: -10px;
-    }
-
-    to {
-        bottom: 0;
-    }
-}
-
-@keyframes fadein {
-    from {
-        opacity: 0;
-    }
-}
