@@ -1,3 +1,37 @@
+const toggleMoon = document.getElementById('moon')
+const toggleSun = document.getElementById('sun')
+
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark')
+  toggleMoon.classList.remove('hidden');
+  toggleSun.classList.add('hidden');
+} else {
+  document.documentElement.classList.remove('dark')
+  toggleMoon.classList.add('hidden');
+  toggleSun.classList.remove('hidden');
+}
+
+const toggleTheme = document.getElementById('toggle-theme')
+toggleTheme.addEventListener('click', () => {
+  document.documentElement.classList.toggle('dark');
+  if(localStorage.theme === 'dark') {
+    localStorage.theme = 'light';
+  } else {
+    localStorage.theme = 'dark';
+  }
+  toggleMoon.classList.toggle('hidden');
+  toggleSun.classList.toggle('hidden');
+  console.log(localStorage)
+})
+
+// // Whenever the user explicitly chooses light mode
+// localStorage.theme = 'light'
+
+// // Whenever the user explicitly chooses dark mode
+
+// // Whenever the user explicitly chooses to respect the OS preference
+
 async function download(url) {
   // Fetch from API
   const response = await fetch(
