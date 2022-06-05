@@ -17,8 +17,8 @@
 <body class="bg-white dark:bg-gray-800 relative">
   <div class="wrapper container mx-auto p-4 pt-0">
     <header>
-      <div class="flex justify-end max-w-sm sm:max-w-lg mx-auto pt-2 pb-2 cursor-pointer" id="toggle-theme">
-        <div class="text-xl text-gray-800 dark:text-white">
+      <div class="flex justify-end max-w-sm sm:max-w-lg mx-auto pt-2 pb-4">
+        <div class="text-xl text-gray-800 cursor-pointer dark:text-white" id="toggle-theme">
           <div id="moon">
             <i class="fa-solid fa-moon"></i>
           </div>
@@ -43,48 +43,18 @@
               class="p-3 bg-gray-200 bg-opacity-80 dark:bg-gray-700 dark:bg-opacity-30 rounded-md flex gap-2 items-center">
               <label class="text-gray-400" for="url"><i class="fa-solid fa-link"></i></label>
               <input type="text" placeholder="Paste link here!"
-                class="focus:outline-none bg-transparent w-full autofill:bg-transparent dark:caret-white dark:text-white"
+                class="focus:outline-none bg-transparent w-full autofill:bg-transparent dark:caret-white text-gray-800 dark:text-white"
                 id="url" autocomplete="off">
               <button type="submit"
-                class="py-2 px-4 bg-gradient-to-tr from-gray-500 via-gray-900 to-gray-800 rounded-md text-white dark:from-gray-900 dark:font-bold dark:bg-gray-900">Download</button>
+                class="py-2 px-4 bg-gradient-to-tr via-gray-900 to-gray-800 rounded-md text-white from-gray-900 font-bold dark:bg-gray-900">Download</button>
             </div>
           </form>
-        </div>
-        <div class="mt-5 p-4 shadow-xl dark:shadow-gray-900 rounded-md">
-          <h1 class="text-xl font-bold text-gray-800 dark:text-white">Ready Files:</h1>
-          <div class="flex flex-col divide-y-2">
-            <!-- H -->
-            <div class="flex flex-col sm:flex-row gap-4 py-4">
-              <div>
-                <img class="sm:w-96"
-                  src="https://image.slidesharecdn.com/bab4-rekayasakebutuhan-161102074949/95/software-engineering-1-requirement-engineering-1-1024.jpg?cb=1478166187"
-                  alt="Software Engineering 1 (Requirement Engineering)">
-              </div>
-              <div class="flex flex-col gap-4 justify-between">
-                <div class="font-bold text-gray-800 dark:text-white text-lg">
-                  <h2>
-                    Software Engineering 1 (Requirement Engineering)
-                  </h2>
-                  <div class="text-sm text-gray-500">
-                    Size : 7.5 mb
-                  </div>
-                </div>
-                <div class="flex text-sm font-semibold gap-2">
-                  <a
-                    class="hover:cursor-pointer flex items-center bg-gradient-to-tr from-gray bg-gray-800 dark:bg-gray-900 border-2 border-gray-800 dark:border-gray-900 text-white rounded-md px-4 py-1">Read</a>
-                  <a
-                    class="hover:cursor-pointer flex items-center bg-white dark:bg-gray-700 border-2 border-gray-800 dark:border-gray-700 text-gray-800 dark:text-white rounded-md px-4 py-1">Save
-                    &nbsp;<i class="fa-solid fa-chevron-down"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </main>
     <footer>
       <div class="text-center pt-4 flex gap-4 justify-center">
-        <p class="text-gray-500 dark:text-gray-300">
+        <p class="text-gray-500 dark:text-gray-400">
           Created by <span class="font-bold text-gray-800 dark:text-white"><i class="fa-brands fa-github"></i> <a
               href="https://github.com/ichsnn" class="underline">ichsnn</a></span>
         </p>
