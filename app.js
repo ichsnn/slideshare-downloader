@@ -27,16 +27,13 @@ function darkModeOptions() {
     }
     toggleMoon.classList.toggle("hidden");
     toggleSun.classList.toggle("hidden");
-    console.log(localStorage);
   });
 }
-
-darkModeOptions();
 
 async function download(url) {
   // Fetch from API
   const response = await fetch(
-    "http://slideshare-image-api.herokuapp.com/api/slides/download?url=" + url
+    "https://slideshare-image-api.herokuapp.com/api/slides/download?url=" + url
   );
 
   // Throw error if response false
@@ -83,3 +80,26 @@ async function download(url) {
   downloadObject.href = URL.createObjectURL(blob);
   downloadObject.click();
 }
+
+darkModeOptions();
+
+const urlForm = document.getElementById('url-form');
+
+urlForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const url = document.getElementById('url').value;
+  const btnDownload = document.getElementById('btn-download')
+
+  btnDownload.innerHTML = 'Loading...';
+  btnDownload.disabled = true;
+  btnDownload.classList.add('cursor-not-allowed')
+  try {
+    await download(url)
+  } catch (error) {
+    console.log(error.message)
+  }
+  btnDownload.classList.remove('cursor-not-allowed')
+  btnDownload.disabled = false;
+  btnDownload.textContent = 'Download';
+})
