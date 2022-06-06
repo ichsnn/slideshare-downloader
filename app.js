@@ -69,10 +69,9 @@ async function download(url) {
           }
           controller.enqueue(value);
           receivedLength += value.length;
-          progressLength =
-            ((receivedLength / contentLength) * 100).toFixed + "%";
+          const progressLength =
+            ((receivedLength / contentLength) * 100).toFixed() + "%";
           downloadProgress.style.width = progressLength;
-          // console.log(`Received ${receivedLength} of ${contentLength}`);
         }
         downloadProgress.classList.add("hidden");
         downloadProgress.style.removeProperty('width');
@@ -86,7 +85,7 @@ async function download(url) {
   downloadObject.target = "_blank";
   downloadObject.download = filename;
   downloadObject.href = URL.createObjectURL(blob);
-  // downloadObject.click();
+  downloadObject.click();
 }
 
 darkModeOptions();
