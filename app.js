@@ -32,6 +32,8 @@ function darkModeOptions() {
 
 async function download(url) {
   // Fetch from API
+  const downloadProgress = document.getElementById("download-progress");
+
   const response = await fetch(
     "https://slideshare-image-api.herokuapp.com/api/slides/download?url=" + url
   );
@@ -58,6 +60,7 @@ async function download(url) {
         const reader = response.body.getReader();
         const contentLength = +response.headers.get("Content-Length");
         let receivedLength = 0;
+        downloadProgress.classList.remove("hidden");
         while (true) {
           const { done, value } = await reader.read();
           if (done) {
@@ -66,8 +69,13 @@ async function download(url) {
           }
           controller.enqueue(value);
           receivedLength += value.length;
-          console.log(`Received ${receivedLength} of ${contentLength}`);
+          progressLength =
+            ((receivedLength / contentLength) * 100).toFixed + "%";
+          downloadProgress.style.width = progressLength;
+          // console.log(`Received ${receivedLength} of ${contentLength}`);
         }
+        downloadProgress.classList.add("hidden");
+        downloadProgress.style.removeProperty('width');
       },
     })
   );
@@ -78,28 +86,29 @@ async function download(url) {
   downloadObject.target = "_blank";
   downloadObject.download = filename;
   downloadObject.href = URL.createObjectURL(blob);
-  downloadObject.click();
+  // downloadObject.click();
 }
 
 darkModeOptions();
 
-const urlForm = document.getElementById('url-form');
+const urlForm = document.getElementById("url-form");
 
-urlForm.addEventListener('submit', async (event) => {
+urlForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const url = document.getElementById('url').value;
-  const btnDownload = document.getElementById('btn-download')
+  const url = document.getElementById("url").value;
+  console.log(url)
+  const btnDownload = document.getElementById("btn-download");
 
-  btnDownload.innerHTML = 'Loading...';
+  btnDownload.innerHTML = "Loading...";
   btnDownload.disabled = true;
-  btnDownload.classList.add('cursor-not-allowed')
+  btnDownload.classList.add("cursor-not-allowed");
   try {
-    await download(url)
+    await download(url);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-  btnDownload.classList.remove('cursor-not-allowed')
+  btnDownload.classList.remove("cursor-not-allowed");
   btnDownload.disabled = false;
-  btnDownload.textContent = 'Download';
-})
+  btnDownload.textContent = "Download";
+});
