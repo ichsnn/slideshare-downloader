@@ -1,11 +1,11 @@
 class Alert extends HTMLElement {
   // For tailwind builder only
-  redAccent = ["bg-red-100", "border-red-600", "text-red-500"]
-  greenAccent = ["bg-green-100", "border-green-600", "text-green-500"]
+  redAccent = ["bg-red-100", "border-red-600", "text-red-500"];
+  greenAccent = ["bg-green-100", "border-green-600", "text-green-500"];
   constructor(message, accentColor, icon) {
     super();
     this.innerHTML = `
-      <div class="fixed top-4 left-4 bg-${accentColor}-100 rounded-md p-4 border-2 border-${accentColor}-600">
+      <div id="alert-box" class="absolute top-4 transition-all ease-out -left-full bg-${accentColor}-100 rounded-md p-4 border-2 border-${accentColor}-600">
         <div class="flex items-center gap-2">
           <i class="${icon} text-${accentColor}-500"></i>
           <div class="text-gray-900 text-sm w-52">${message}</div>
@@ -22,9 +22,22 @@ class Alert extends HTMLElement {
     btnClose.addEventListener("click", () => {
       this.remove();
     });
+
+    const alertBox = this.querySelector("#alert-box");
     setTimeout(() => {
-      this.remove();
-    }, 5000);
+      alertBox.classList.remove("-left-full");
+      alertBox.classList.add("left-4");
+    }, 50);
+
+    setTimeout(() => {
+      alertBox.classList.remove('top-4')
+      alertBox.classList.add('top-6')
+      alertBox.classList.add('opacity-0')
+    }, 5000)
+
+    setTimeout(() => {
+      this.remove()
+    }, 5500)
   }
 }
 
@@ -153,6 +166,8 @@ async function handleSubmit(event) {
     await download(url);
   } catch (error) {
     console.log(error);
+    if (alertContainer.childNodes.length > 0)
+      alertContainer.removeChild(alertContainer.childNodes[0]);
     alertContainer.appendChild(new AlertError(error.message));
   }
   btnDownload.classList.remove("cursor-not-allowed");
