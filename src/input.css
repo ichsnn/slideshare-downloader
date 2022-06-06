@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .wrapper {
-  @apply min-h-screen grid grid-rows-[auto,1fr,auto] auto-rows-fr;
+  @apply min-h-screen grid grid-rows-[1fr,auto] auto-rows-fr;
 }
 
 input:-webkit-autofill {

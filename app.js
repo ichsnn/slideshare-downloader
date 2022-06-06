@@ -1,3 +1,61 @@
+const alertContainer = document.getElementById("alert-container");
+
+class AlertError extends HTMLElement {
+  constructor(message) {
+    super();
+    this.innerHTML = `
+      <div class="fixed top-4 left-4 bg-red-100 rounded-md p-4 border-2 border-red-600">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-exclamation text-red-500"></i>
+          <div class="text-gray-900 text-sm w-52">${message}</div>
+          <div class="cursor-pointer" id="close-alert">
+            <i class="fa-solid fa-xmark text-gray-900"></i>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  connectedCallback() {
+    const btnClose = this.querySelector("#close-alert");
+    btnClose.addEventListener("click", () => {
+      this.remove();
+    });
+    setTimeout(() => {
+      this.remove();
+    }, 5000);
+  }
+}
+customElements.define("alert-error", AlertError);
+
+class AlertSuccess extends HTMLElement {
+  constructor() {
+    super();
+    this.innerHTML = `
+      <div class="fixed top-4 left-4 bg-green-100 rounded-md p-4 border-2 border-green-600">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-green-500"></i>
+          <div class="text-gray-900 text-sm w-52">Download Successful</div>
+          <div class="cursor-pointer" id="close-alert">
+            <i class="fa-solid fa-xmark text-gray-900"></i>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  connectedCallback() {
+    const btnClose = this.querySelector("#close-alert");
+    btnClose.addEventListener("click", () => {
+      this.remove();
+    });
+    setTimeout(() => {
+      this.remove();
+    }, 5000);
+  }
+}
+customElements.define("alert-success", AlertSuccess);
+
 function darkModeOptions() {
   const toggleMoon = document.getElementById("moon");
   const toggleSun = document.getElementById("sun");
@@ -73,8 +131,9 @@ async function download(url) {
             ((receivedLength / contentLength) * 100).toFixed() + "%";
           downloadProgress.style.width = progressLength;
         }
+        alertContainer.appendChild(new AlertSuccess());
         downloadProgress.classList.add("hidden");
-        downloadProgress.style.removeProperty('width');
+        downloadProgress.style.removeProperty("width");
       },
     })
   );
@@ -96,7 +155,7 @@ urlForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const url = document.getElementById("url").value;
-  console.log(url)
+  console.log(url);
   const btnDownload = document.getElementById("btn-download");
 
   btnDownload.innerHTML = "Loading...";
@@ -105,7 +164,7 @@ urlForm.addEventListener("submit", async (event) => {
   try {
     await download(url);
   } catch (error) {
-    console.log(error.message);
+    alertContainer.appendChild(new AlertError(error.message));
   }
   btnDownload.classList.remove("cursor-not-allowed");
   btnDownload.disabled = false;
