@@ -1,12 +1,10 @@
-const alertContainer = document.getElementById("alert-container");
-
-class AlertError extends HTMLElement {
-  constructor(message) {
+class Alert extends HTMLElement {
+  constructor(message, accentColor, icon) {
     super();
     this.innerHTML = `
-      <div class="fixed top-4 left-4 bg-red-100 rounded-md p-4 border-2 border-red-600">
+      <div class="fixed top-4 left-4 bg-${accentColor}-100 rounded-md p-4 border-2 border-${accentColor}-600">
         <div class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-exclamation text-red-500"></i>
+          <i class="${icon} text-${accentColor}-500"></i>
           <div class="text-gray-900 text-sm w-52">${message}</div>
           <div class="cursor-pointer" id="close-alert">
             <i class="fa-solid fa-xmark text-gray-900"></i>
@@ -26,35 +24,22 @@ class AlertError extends HTMLElement {
     }, 5000);
   }
 }
+
+class AlertError extends Alert {
+  constructor(message) {
+    super(message, "red", "fa-solid fa-circle-exclamation");
+  }
+}
 customElements.define("alert-error", AlertError);
 
-class AlertSuccess extends HTMLElement {
+class AlertSuccess extends Alert {
   constructor() {
-    super();
-    this.innerHTML = `
-      <div class="fixed top-4 left-4 bg-green-100 rounded-md p-4 border-2 border-green-600">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-check text-green-500"></i>
-          <div class="text-gray-900 text-sm w-52">Download Successful</div>
-          <div class="cursor-pointer" id="close-alert">
-            <i class="fa-solid fa-xmark text-gray-900"></i>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  connectedCallback() {
-    const btnClose = this.querySelector("#close-alert");
-    btnClose.addEventListener("click", () => {
-      this.remove();
-    });
-    setTimeout(() => {
-      this.remove();
-    }, 5000);
+    super("Download successful", "green", "fa-solid fa-circle-check");
   }
 }
 customElements.define("alert-success", AlertSuccess);
+
+const alertContainer = document.getElementById("alert-container");
 
 function darkModeOptions() {
   const toggleMoon = document.getElementById("moon");
@@ -164,6 +149,7 @@ urlForm.addEventListener("submit", async (event) => {
   try {
     await download(url);
   } catch (error) {
+    console.log(error)
     alertContainer.appendChild(new AlertError(error.message));
   }
   btnDownload.classList.remove("cursor-not-allowed");
