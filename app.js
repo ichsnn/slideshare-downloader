@@ -47,8 +47,18 @@ const downloadProgress = document.getElementById("download-progress");
 const urlForm = document.getElementById("url-form");
 const btnDownload = document.getElementById("btn-download");
 
-function darkModeOptions() {
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+function handleToggleTheme() {
+  document.documentElement.classList.toggle("dark");
+  if (localStorage.theme === "dark") {
+    localStorage.theme = "light";
+  } else {
+    localStorage.theme = "dark";
+  }
+  toggleMoon.classList.toggle("hidden");
+  toggleSun.classList.toggle("hidden");
+}
+
+function initThemeOptions() {
   if (
     localStorage.theme === "dark" ||
     (!("theme" in localStorage) &&
@@ -62,17 +72,12 @@ function darkModeOptions() {
     toggleMoon.classList.add("hidden");
     toggleSun.classList.remove("hidden");
   }
+}
 
-  toggleTheme.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark");
-    if (localStorage.theme === "dark") {
-      localStorage.theme = "light";
-    } else {
-      localStorage.theme = "dark";
-    }
-    toggleMoon.classList.toggle("hidden");
-    toggleSun.classList.toggle("hidden");
-  });
+function darkModeOptions() {
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+  initThemeOptions();
+  toggleTheme.addEventListener("click", handleToggleTheme);
 }
 
 async function download(url) {
