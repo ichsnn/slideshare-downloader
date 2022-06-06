@@ -1,4 +1,7 @@
 class Alert extends HTMLElement {
+  // For tailwind builder only
+  redAccent = ["bg-red-100", "border-red-600", "text-red-500"]
+  greenAccent = ["bg-green-100", "border-green-600", "text-green-500"]
   constructor(message, accentColor, icon) {
     super();
     this.innerHTML = `
