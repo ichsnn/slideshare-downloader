@@ -40,11 +40,14 @@ class AlertSuccess extends Alert {
 customElements.define("alert-success", AlertSuccess);
 
 const alertContainer = document.getElementById("alert-container");
+const toggleMoon = document.getElementById("moon");
+const toggleSun = document.getElementById("sun");
+const toggleTheme = document.getElementById("toggle-theme");
+const downloadProgress = document.getElementById("download-progress");
+const urlForm = document.getElementById("url-form");
+const btnDownload = document.getElementById("btn-download");
 
 function darkModeOptions() {
-  const toggleMoon = document.getElementById("moon");
-  const toggleSun = document.getElementById("sun");
-
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC
   if (
     localStorage.theme === "dark" ||
@@ -60,7 +63,6 @@ function darkModeOptions() {
     toggleSun.classList.remove("hidden");
   }
 
-  const toggleTheme = document.getElementById("toggle-theme");
   toggleTheme.addEventListener("click", () => {
     document.documentElement.classList.toggle("dark");
     if (localStorage.theme === "dark") {
@@ -75,8 +77,6 @@ function darkModeOptions() {
 
 async function download(url) {
   // Fetch from API
-  const downloadProgress = document.getElementById("download-progress");
-
   const response = await fetch(
     "https://slideshare-image-api.herokuapp.com/api/slides/download?url=" + url
   );
@@ -132,16 +132,11 @@ async function download(url) {
   downloadObject.click();
 }
 
-darkModeOptions();
-
-const urlForm = document.getElementById("url-form");
-
-urlForm.addEventListener("submit", async (event) => {
+async function handleSubmit(event) {
   event.preventDefault();
 
   const url = document.getElementById("url").value;
   console.log(url);
-  const btnDownload = document.getElementById("btn-download");
 
   btnDownload.innerHTML = "Loading...";
   btnDownload.disabled = true;
@@ -149,10 +144,14 @@ urlForm.addEventListener("submit", async (event) => {
   try {
     await download(url);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     alertContainer.appendChild(new AlertError(error.message));
   }
   btnDownload.classList.remove("cursor-not-allowed");
   btnDownload.disabled = false;
   btnDownload.textContent = "Download";
-});
+}
+
+darkModeOptions();
+
+urlForm.addEventListener("submit", handleSubmit);
