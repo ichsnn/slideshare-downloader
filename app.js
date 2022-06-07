@@ -5,12 +5,13 @@ class Alert extends HTMLElement {
   constructor(message, accentColor, icon) {
     super();
     this.innerHTML = `
-      <div id="alert-box" class="absolute top-4 transition-all ease-out -left-full bg-${accentColor}-100 rounded-md p-4 border-2 border-${accentColor}-600">
+      <div id="alert-box" class="absolute top-4 shadow-2xl dark:shadow-gray-900 transition-all ease-out -left-full rounded-md p-4
+      bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600">
         <div class="flex items-center gap-2">
-          <i class="${icon} text-${accentColor}-500"></i>
-          <div class="text-gray-900 text-sm w-52">${message}</div>
+          <i class="${icon} text-red-600"></i>
+          <div class="font-medium text-gray-600 dark:text-gray-200 text-sm w-52">${message}</div>
           <div class="cursor-pointer" id="close-alert">
-            <i class="fa-solid fa-xmark text-gray-900"></i>
+            <i class="fa-solid fa-xmark text-gray-500 dark:text-gray-100"></i>
           </div>
         </div>
       </div>
@@ -29,15 +30,15 @@ class Alert extends HTMLElement {
       alertBox.classList.add("left-4");
     }, 50);
 
-    setTimeout(() => {
-      alertBox.classList.remove('top-4')
-      alertBox.classList.add('top-6')
-      alertBox.classList.add('opacity-0')
-    }, 5000)
+    // setTimeout(() => {
+    //   alertBox.classList.remove('top-4')
+    //   alertBox.classList.add('top-6')
+    //   alertBox.classList.add('opacity-0')
+    // }, 5000)
 
-    setTimeout(() => {
-      this.remove()
-    }, 5500)
+    // setTimeout(() => {
+    //   this.remove()
+    // }, 5500)
   }
 }
 
@@ -157,7 +158,6 @@ async function handleSubmit(event) {
   event.preventDefault();
 
   const url = document.getElementById("url").value;
-  console.log(url);
 
   btnDownload.innerHTML = "Loading...";
   btnDownload.disabled = true;
@@ -165,7 +165,6 @@ async function handleSubmit(event) {
   try {
     await download(url);
   } catch (error) {
-    console.log(error);
     if (alertContainer.childNodes.length > 0)
       alertContainer.removeChild(alertContainer.childNodes[0]);
     alertContainer.appendChild(new AlertError(error.message));
