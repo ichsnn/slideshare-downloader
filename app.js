@@ -1,15 +1,17 @@
-const alertContainer = document.getElementById("alert-container");
-
-class AlertError extends HTMLElement {
-  constructor(message) {
+class Alert extends HTMLElement {
+  // For tailwind builder only
+  successAccent = "text-green-600";
+  errorAccent = "text-red-600";
+  constructor(message, accentColor, icon) {
     super();
     this.innerHTML = `
-      <div class="fixed top-4 left-4 bg-red-100 rounded-md p-4 border-2 border-red-600">
+      <div id="alert-box" class="absolute top-4 shadow-2xl dark:shadow-gray-900 transition-all ease-out -left-full rounded-md p-4
+      bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600">
         <div class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-exclamation text-red-500"></i>
-          <div class="text-gray-900 text-sm w-52">${message}</div>
+          <i class="${icon} text-${accentColor}-600"></i>
+          <div class="font-medium text-gray-600 dark:text-gray-200 text-sm w-52">${message}</div>
           <div class="cursor-pointer" id="close-alert">
-            <i class="fa-solid fa-xmark text-gray-900"></i>
+            <i class="fa-solid fa-xmark text-gray-500 dark:text-gray-100"></i>
           </div>
         </div>
       </div>
@@ -21,46 +23,59 @@ class AlertError extends HTMLElement {
     btnClose.addEventListener("click", () => {
       this.remove();
     });
+
+    const alertBox = this.querySelector("#alert-box");
     setTimeout(() => {
-      this.remove();
-    }, 5000);
+      alertBox.classList.remove("-left-full");
+      alertBox.classList.add("left-4");
+    }, 50);
+
+    setTimeout(() => {
+      alertBox.classList.remove('top-4')
+      alertBox.classList.add('top-6')
+      alertBox.classList.add('opacity-0')
+    }, 3000)
+
+    setTimeout(() => {
+      this.remove()
+    }, 3500)
+  }
+}
+
+class AlertError extends Alert {
+  constructor(message) {
+    super(message, "red", "fa-solid fa-circle-exclamation");
   }
 }
 customElements.define("alert-error", AlertError);
 
-class AlertSuccess extends HTMLElement {
+class AlertSuccess extends Alert {
   constructor() {
-    super();
-    this.innerHTML = `
-      <div class="fixed top-4 left-4 bg-green-100 rounded-md p-4 border-2 border-green-600">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-circle-check text-green-500"></i>
-          <div class="text-gray-900 text-sm w-52">Download Successful</div>
-          <div class="cursor-pointer" id="close-alert">
-            <i class="fa-solid fa-xmark text-gray-900"></i>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  connectedCallback() {
-    const btnClose = this.querySelector("#close-alert");
-    btnClose.addEventListener("click", () => {
-      this.remove();
-    });
-    setTimeout(() => {
-      this.remove();
-    }, 5000);
+    super("Download successful", "green", "fa-solid fa-circle-check");
   }
 }
 customElements.define("alert-success", AlertSuccess);
 
-function darkModeOptions() {
-  const toggleMoon = document.getElementById("moon");
-  const toggleSun = document.getElementById("sun");
+const alertContainer = document.getElementById("alert-container");
+const toggleMoon = document.getElementById("moon");
+const toggleSun = document.getElementById("sun");
+const toggleTheme = document.getElementById("toggle-theme");
+const downloadProgress = document.getElementById("download-progress");
+const urlForm = document.getElementById("url-form");
+const btnDownload = document.getElementById("btn-download");
 
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+function handleToggleTheme() {
+  document.documentElement.classList.toggle("dark");
+  if (localStorage.theme === "dark") {
+    localStorage.theme = "light";
+  } else {
+    localStorage.theme = "dark";
+  }
+  toggleMoon.classList.toggle("hidden");
+  toggleSun.classList.toggle("hidden");
+}
+
+function initThemeOptions() {
   if (
     localStorage.theme === "dark" ||
     (!("theme" in localStorage) &&
@@ -74,24 +89,16 @@ function darkModeOptions() {
     toggleMoon.classList.add("hidden");
     toggleSun.classList.remove("hidden");
   }
+}
 
-  const toggleTheme = document.getElementById("toggle-theme");
-  toggleTheme.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark");
-    if (localStorage.theme === "dark") {
-      localStorage.theme = "light";
-    } else {
-      localStorage.theme = "dark";
-    }
-    toggleMoon.classList.toggle("hidden");
-    toggleSun.classList.toggle("hidden");
-  });
+function darkModeOptions() {
+  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+  initThemeOptions();
+  toggleTheme.addEventListener("click", handleToggleTheme);
 }
 
 async function download(url) {
   // Fetch from API
-  const downloadProgress = document.getElementById("download-progress");
-
   const response = await fetch(
     "https://slideshare-image-api.herokuapp.com/api/slides/download?url=" + url
   );
@@ -147,16 +154,10 @@ async function download(url) {
   downloadObject.click();
 }
 
-darkModeOptions();
-
-const urlForm = document.getElementById("url-form");
-
-urlForm.addEventListener("submit", async (event) => {
+async function handleSubmit(event) {
   event.preventDefault();
 
   const url = document.getElementById("url").value;
-  console.log(url);
-  const btnDownload = document.getElementById("btn-download");
 
   btnDownload.innerHTML = "Loading...";
   btnDownload.disabled = true;
@@ -164,9 +165,15 @@ urlForm.addEventListener("submit", async (event) => {
   try {
     await download(url);
   } catch (error) {
+    if (alertContainer.childNodes.length > 0)
+      alertContainer.removeChild(alertContainer.childNodes[0]);
     alertContainer.appendChild(new AlertError(error.message));
   }
   btnDownload.classList.remove("cursor-not-allowed");
   btnDownload.disabled = false;
   btnDownload.textContent = "Download";
-});
+}
+
+darkModeOptions();
+
+urlForm.addEventListener("submit", handleSubmit);
