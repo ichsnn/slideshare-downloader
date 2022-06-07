@@ -1,14 +1,14 @@
 class Alert extends HTMLElement {
   // For tailwind builder only
-  redAccent = ["bg-red-100", "border-red-600", "text-red-500"];
-  greenAccent = ["bg-green-100", "border-green-600", "text-green-500"];
+  successAccent = "text-green-600";
+  errorAccent = "text-red-600";
   constructor(message, accentColor, icon) {
     super();
     this.innerHTML = `
       <div id="alert-box" class="absolute top-4 shadow-2xl dark:shadow-gray-900 transition-all ease-out -left-full rounded-md p-4
       bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600">
         <div class="flex items-center gap-2">
-          <i class="${icon} text-red-600"></i>
+          <i class="${icon} text-${accentColor}-600"></i>
           <div class="font-medium text-gray-600 dark:text-gray-200 text-sm w-52">${message}</div>
           <div class="cursor-pointer" id="close-alert">
             <i class="fa-solid fa-xmark text-gray-500 dark:text-gray-100"></i>
@@ -30,15 +30,15 @@ class Alert extends HTMLElement {
       alertBox.classList.add("left-4");
     }, 50);
 
-    // setTimeout(() => {
-    //   alertBox.classList.remove('top-4')
-    //   alertBox.classList.add('top-6')
-    //   alertBox.classList.add('opacity-0')
-    // }, 5000)
+    setTimeout(() => {
+      alertBox.classList.remove('top-4')
+      alertBox.classList.add('top-6')
+      alertBox.classList.add('opacity-0')
+    }, 3000)
 
-    // setTimeout(() => {
-    //   this.remove()
-    // }, 5500)
+    setTimeout(() => {
+      this.remove()
+    }, 3500)
   }
 }
 
