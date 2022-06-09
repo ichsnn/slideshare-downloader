@@ -34,11 +34,11 @@ class Alert extends HTMLElement {
       alertBox.classList.remove('top-4')
       alertBox.classList.add('top-6')
       alertBox.classList.add('opacity-0')
-    }, 3000)
+    }, 20000)
 
     setTimeout(() => {
       this.remove()
-    }, 3500)
+    }, 20500)
   }
 }
 
